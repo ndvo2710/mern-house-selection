@@ -1,12 +1,14 @@
 import bluebird from 'bluebird';
 import mongoose from 'mongoose';
+import * as logging from '../utils/loggingUtils.js';
 import { ATLAS_URL } from '../utils/secrets.js';
 
-console.log(ATLAS_URL);
+const logger = logging.getLogger('connectDB');
+
 /**
  * Connect to MongoDB
  */
-const connectDB = () => {
+export const connectDB = () => {
     mongoose.Promise = bluebird;
     mongoose
         .connect(ATLAS_URL, {
@@ -15,13 +17,12 @@ const connectDB = () => {
             useCreateIndex: true,
             useFindAndModify: false,
         })
-        .then((_) => console.log('Already connected to MongoDB Atlas!'))
+        .then((_) => {
+            logger.info('Already connected to MongoDB Atlas!');
+        })
         .catch((e) => {
-            console.log('Failed to establish connection to MongoDB Atlas!');
+            logger.debug('Failed to establish connection to MongoDB Atlas!');
             throw new Error(e);
         });
 };
 
-
-// (connectDB)();
-module.exports = connectDB;
