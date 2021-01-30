@@ -3,7 +3,12 @@ import cors from 'cors';
 import express from 'express';
 // import mongoose from 'mongoose';
 import { connectDB } from './config/connectDB.js';
+import { initRoutes } from './routes/web.js';
+import * as logging from './utils/loggingUtils.js';
 import { PORT } from './utils/secrets.js';
+
+
+const logger = logging.getLogger('MainIndex');
 
 connectDB();
 
@@ -13,6 +18,8 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
+initRoutes(app);
+
+app.listen(PORT, () => logger.info(`Server is running on port: ${PORT}`));
 
 

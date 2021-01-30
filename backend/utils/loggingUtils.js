@@ -3,8 +3,6 @@ import log4js from 'log4js';
 const defaultLevel = 'debug';
 
 // eslint-disable-next-line no-console
-console.log('http://localhost:5000');
-console.log('https://localhost:5000');
 // eslint-disable-next-line no-console
 console.log(`log default level is :  ${defaultLevel}`);
 
