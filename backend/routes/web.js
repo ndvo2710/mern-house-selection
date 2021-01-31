@@ -1,4 +1,5 @@
 import express from 'express';
+import * as dsController from '../controllers/dsController.js';
 import * as logging from '../utils/loggingUtils.js';
 
 const logger = logging.getLogger('Routes Web');
@@ -16,6 +17,8 @@ export const initRoutes = (app) => {
         logger.info('Calling /test');
         return res.send('Testing Express Router')
     });
+
+    router.post('/create-ds', dsController.createNewDS);
 
     return app.use('/', router);
 };
