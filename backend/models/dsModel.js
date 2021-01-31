@@ -1,9 +1,6 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
-
-
-const dsSchema = new Schema({
+const dsSchema = new mongoose.Schema({
     ds: { type: String, required: true },
     createdAt: { type: Number, default: Date.now },
     updatedAt: { type: Number, default: null },
@@ -12,8 +9,11 @@ const dsSchema = new Schema({
 
 dsSchema.statics = {
     createNew(item) {
-        return this.create(item);
+        return this.create({ ds: item });
     },
+    checkExists(currentDs) {
+        return this.findOne({ ds: currentDs }).exec();
+    }
 
 };
 

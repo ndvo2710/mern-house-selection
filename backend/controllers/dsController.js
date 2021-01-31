@@ -17,7 +17,9 @@ export const createNewDS = async (req, res) => {
     } catch (error) {
         logger.debug(error);
         logger.debug(`errorMessage: ${error.message}`);
-        res.status(500).send(error);
+        return res.status(500).send({
+            error: error.message
+        });
     }
 }
 
