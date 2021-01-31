@@ -1,5 +1,5 @@
 import express from 'express';
-import * as dsController from '../controllers/dsController.js';
+import { dsController, zillowPageController } from '../controllers/index.js';
 import * as logging from '../utils/loggingUtils.js';
 
 const logger = logging.getLogger('Routes Web');
@@ -19,6 +19,7 @@ export const initRoutes = (app) => {
     });
 
     router.post('/create-ds', dsController.createNewDS);
+    router.post('/zillow-page', zillowPageController.createNewZillowPage)
 
     return app.use('/', router);
 };
