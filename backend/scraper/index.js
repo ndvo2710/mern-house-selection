@@ -29,4 +29,4 @@ async function scrapAndFetchMongo() {
 
 };
 
-scrapAndFetchMongo();
+export default scrapAndFetchMongo;

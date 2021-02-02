@@ -17,7 +17,7 @@ class browserObject {
         } catch (err) {
             logger.debug("Could not create a browser instance => : ", err);
         }
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        // await new Promise(resolve => setTimeout(resolve, 5000));
         return browser;
     }
 }

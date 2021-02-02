@@ -22,11 +22,17 @@ async function postUrl(currentUrlDict) {
 
 
 const urls = [
-    'https://www.zillow.com/homedetails/2509-Thunder-Horse-Leander-TX-78641/116080050_zpid/',
-    'https://www.zillow.com/community/deerbrooke/2076798954_zpid/',
+    'https://www.zillow.com/homedetails/11700-Sun-Glass-Dr-Manor-TX-78653/80104457_zpid/',
+    'https://www.zillow.com/homedetails/11811-New-Sweden-Church-Rd-Manor-TX-78653/83833153_zpid/',
+    'https://www.zillow.com/homedetails/12628-Saint-Mary-Dr-Manor-TX-78653/70353915_zpid/',
+    'https://www.zillow.com/homedetails/9805-Evening-Canopy-Dr-Manor-TX-78653/2077242472_zpid/',
+    'https://www.zillow.com/community/vine-creek/2078332362_zpid/',
+    'https://www.zillow.com/homedetails/3508-Winter-Wren-Way-Pflugerville-TX-78660/145657488_zpid/',
+    'https://www.zillow.com/homedetails/312-Blackman-Trl-Hutto-TX-78634/70992870_zpid/',
     'https://www.zillow.com/homedetails/420-Canadian-Springs-Dr-Leander-TX-78641/305173525_zpid/',
-    'https://www.zillow.com/homedetails/2624-Montebelluna-Pl-Leander-TX-78641/145552473_zpid/',
-    'https://www.zillow.com/homedetails/1408-Volente-Ln-Leander-TX-78641/243342678_zpid/',
+    'https://www.zillow.com/homedetails/4806-Scarsdale-Dr-Austin-TX-78744/29466471_zpid/',
+    'https://www.zillow.com/homedetails/1705-Main-St-Bastrop-TX-78602/84372081_zpid/',
+    'https://www.zillow.com/homedetails/123-Valle-Verde-Dr-Del-Valle-TX-78617/214442243_zpid/'
 ]
 
 
