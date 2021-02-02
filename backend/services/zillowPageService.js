@@ -1,7 +1,7 @@
 import zillowSchema from '../models/zillowPageModel.js';
 import * as logging from '../utils/loggingUtils.js';
 
-const logger = logging.getLogger('dsService');
+const logger = logging.getLogger('zillowPageService');
 
 
 class zillowPageService {
@@ -12,6 +12,12 @@ class zillowPageService {
         }
         const newZillowPage = await zillowSchema.createNew(currentPageDict);
         return newZillowPage
+    }
+
+    static async fetchDataByDs(ds) {
+        const zillowPages = await zillowSchema.getItemsByDs(ds);
+        logger.info('zillowPages: ', zillowPages);
+        return zillowPages
     }
 }
 
