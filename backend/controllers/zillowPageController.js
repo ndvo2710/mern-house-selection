@@ -23,6 +23,24 @@ class zillowController {
             });
         }
     }
+
+    static async fetchAllPagesByDs(req, res) {
+        logger.info('GET /fetch-zillow/:ds');
+        logger.debug(`req.params:\n${JSON.stringify(req.params, null, 2)}`);
+        logger.debug(`req.params.ds:\n${JSON.stringify(req.params.ds, null, 2)}`);
+        try {
+            const zillowPages = await zillowPageService.fetchDataByDs(req.params.ds);
+            return res.status(200).send({
+                success: zillowPages
+            });
+        } catch (error) {
+            logger.debug(error);
+            logger.debug(`errorMessage: ${error.message}`);
+            return res.status(500).send({
+                error: error.message
+            });
+        }
+    }
 }
 
 export default zillowController;
