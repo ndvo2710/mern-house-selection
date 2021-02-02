@@ -1,5 +1,6 @@
 import express from 'express';
 import { dsController, zillowPageController } from '../controllers/index.js';
+import urlController from '../controllers/urlController.js';
 import * as logging from '../utils/loggingUtils.js';
 
 const logger = logging.getLogger('Routes Web');
@@ -19,6 +20,7 @@ export const initRoutes = (app) => {
     });
 
     router.post('/create-ds', dsController.createNewDS);
+    router.post('/create-url', urlController.createNewUrl);
     router.post('/zillow-page', zillowPageController.createNewZillowPage)
 
     return app.use('/', router);

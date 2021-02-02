@@ -40,8 +40,6 @@ const zillowSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    isChosen: { type: Boolean, default: true },
-    isScraped: { type: Boolean, default: false },
     createdAt: { type: Number, default: Date.now },
     updatedAt: { type: Number, default: null },
     deletedAt: { type: Number, default: null },
