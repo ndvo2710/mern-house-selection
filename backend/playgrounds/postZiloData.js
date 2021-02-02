@@ -29,6 +29,5 @@ const zilowPage = {
     status: 'Active under contract',
     monthlyMortgage: '2123',
     isChosen: true,
-    isScraped: false,
 }
 postZillowPage(zilowPage).then(data => console.log(data)).catch(error => console.log(error))

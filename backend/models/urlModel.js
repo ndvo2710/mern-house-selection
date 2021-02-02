@@ -26,6 +26,27 @@ urlSchema.statics = {
                 { ds: currentDs }
             ],
         }).exec();
+    },
+    findAllUrlsNotDone() {
+        return this.find({ done: false })
+            .exec();
+    },
+    updateStatusDone(currentUrlDict) {
+        const currentUrl = currentUrlDict.url;
+        const currentDs = currentUrlDict.ds;
+        return this.updateOne(
+            {
+                $and: [
+                    { url: currentUrl },
+                    { ds: currentDs },
+                    { done: false }
+                ],
+            },
+            {
+                done: true,
+                updatedAt: Date.now()
+            }
+        ).exec()
     }
 
 };

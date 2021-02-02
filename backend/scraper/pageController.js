@@ -19,6 +19,7 @@ class pageScraperController {
 
             await browser.disconnect();
             await browser.close();
+            return eachPageData
             // await new Promise(resolve => setTimeout(resolve, 5000));
         }
         catch (err) {

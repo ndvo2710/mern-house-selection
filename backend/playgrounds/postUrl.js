@@ -20,11 +20,22 @@ async function postUrl(currentUrlDict) {
     return content
 }
 
-const myUrl = 'https://www.zillow.com/homedetails/1013-Zacarias-Dr-Leander-TX-78641/250925071_zpid/'
-const encodedUrl = encodeURI(myUrl);
-const urlDict = {
-    url: encodedUrl,
-    ds: '02-01-2021'
-}
 
-postUrl(urlDict).then(data => console.log(data.text())).catch(error => console.log(error))
+const urls = [
+    'https://www.zillow.com/homedetails/2509-Thunder-Horse-Leander-TX-78641/116080050_zpid/',
+    'https://www.zillow.com/community/deerbrooke/2076798954_zpid/',
+    'https://www.zillow.com/homedetails/420-Canadian-Springs-Dr-Leander-TX-78641/305173525_zpid/',
+    'https://www.zillow.com/homedetails/2624-Montebelluna-Pl-Leander-TX-78641/145552473_zpid/',
+    'https://www.zillow.com/homedetails/1408-Volente-Ln-Leander-TX-78641/243342678_zpid/',
+]
+
+
+urls.forEach(myUrl => {
+    const encodedUrl = encodeURI(myUrl);
+    const urlDict = {
+        url: encodedUrl,
+        ds: '02-01-2021'
+    }
+
+    postUrl(urlDict).then(data => console.log(data)).catch(error => console.log(error))
+})

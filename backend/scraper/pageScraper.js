@@ -34,10 +34,19 @@ class pageScraper {
         const priceHomeDetails = await newPage.evaluate(() => {
             return document.querySelector('.ds-summary-row-content').textContent
         });
-        let homeDetails = await newPage.evaluate(() => {
+        let details = await newPage.evaluate(() => {
             return document.querySelector('.ds-bed-bath-living-area-header').textContent
         });
-        const price = priceHomeDetails.replace(homeDetails, '').replace(/\$|,/g, '').trim();
+        let price = priceHomeDetails.replace(details, '').replace(/\$|,/g, '').trim();
+        price = price.match(/\d+/g);
+        price = price[0];
+
+        // image-carousel-entry--selected
+        let imageLink = await newPage.evaluate(() => {
+            return document.querySelectorAll('.media-stream-tile img')[0].src;
+        })
+        imageLink = encodeURI(imageLink);
+
 
         const address = await newPage.evaluate(() => {
             return document.querySelector('.ds-price-change-address-row').textContent
@@ -49,7 +58,7 @@ class pageScraper {
             return document.querySelector('.ds-mortgage-row').textContent
         });
 
-        homeDetails = homeDetails.replace('bd', 'bd | ').replace('ba', 'ba | ');
+        details = details.replace('bd', 'bd | ').replace('ba', 'ba | ');
         monthlyMortgage = monthlyMortgage.replace(
             'Est. payment:', ''
         ).replace(
@@ -57,15 +66,18 @@ class pageScraper {
         ).replace(/\$|,/g, '').trim();
 
         logger.info('price: ', price)
-        logger.info('homeDetails: ', homeDetails);
+        logger.info('details: ', details);
         logger.info('address: ', address);
         logger.info('status: ', status);
+        logger.info('imageLink: ', imageLink);
         logger.info('monthlyMortgage: ', monthlyMortgage);
         await newPage.close();
 
         return {
             price: parseInt(price),
-            homeDetails,
+            details,
+            url: encodeURI(url),
+            imageLink,
             address,
             status,
             monthlyMortgage

@@ -26,3 +26,29 @@ export const connectDB = () => {
         });
 };
 
+export const disconnectDB = () => {
+    mongoose.Promise = bluebird;
+    mongoose.disconnect();
+}
+
+function defer(callback) {
+    return new Promise(function (resolve) {
+        setTimeout(function () {
+            resolve(callback());
+        }, 1000);
+    });
+}
+
+class MongoConnectAsync {
+    static async connectDB() {
+        logger.info('Running Async ConnectDB');
+        await defer(connectDB);
+    }
+
+    static async disconnectDB() {
+        logger.info('Running Async DisconnectDB');
+        await defer(disconnectDB);
+    }
+}
+
+export default MongoConnectAsync;

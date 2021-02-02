@@ -5,13 +5,29 @@ const logger = logging.getLogger('dsService');
 
 
 class urlService {
-    static async addNew(currentUrlDict) {
-        const urlExist = await urlSchema.checkExists(currentUrlDict);
+    static async addNew(currentUrl) {
+        const urlExist = await urlSchema.checkExists(currentUrl);
         if (urlExist) {
-            throw new Error('Ds already existed');
+            throw new Error('URL already existed');
         }
-        const newUrl = await urlSchema.createNew(currentUrlDict);
+        const newUrl = await urlSchema.createNew(currentUrl);
         return newUrl
+    }
+
+    static async fetchUrlsNotDone() {
+        const urls = await urlSchema.findAllUrlsNotDone();
+        logger.info(`url: ${JSON.stringify(urls)}`);
+        if (urls === undefined || urls.length === 0) {
+            logger.info('There is no new url');
+            return []
+        } else {
+            return urls
+        }
+    }
+
+    static async markDoneUrl(currentUrl) {
+        const updatedUrl = await urlSchema.updateStatusDone(currentUrl);
+        return updatedUrl
     }
 }
 
