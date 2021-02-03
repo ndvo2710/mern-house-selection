@@ -4,7 +4,7 @@ import { Card, CardBody, CardTitle, Col } from "reactstrap";
 
 function House({ houseClassName, houseData }) {
     return (
-        <Col lg="3">
+        <Col className={houseClassName}>
             <Card
                 className="card-blog card-background"
                 data-animation="zooming"
@@ -16,7 +16,12 @@ function House({ houseClassName, houseData }) {
                             "url(" + houseData.imageLink + ")",
                     }}
                 ></div>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                <a href={houseData.url} onClick={(e) => {
+                    e.preventDefault(); // USE this to prevent go to href site
+                    var win = window.open(houseData.url, '_blank');
+                    win.focus();
+
+                }}>
                     <CardBody>
                         <div className="content-bottom">
                             <h3 className="card-category text-white opacity-8">
