@@ -14,6 +14,9 @@ dsSchema.statics = {
     },
     checkExists(currentDs) {
         return this.findOne({ ds: currentDs }).exec();
+    },
+    getAllDsItem() {
+        return this.find({}).exec();
     }
 
 };

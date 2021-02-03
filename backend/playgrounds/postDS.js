@@ -19,4 +19,4 @@ async function postDs(currentDs) {
     return await response.json();
 }
 
-postDs('01-31-2020').then(data => console.log(data)).catch(error => console.log(error))
+postDs('02-05-2020').then(data => console.log(data)).catch(error => console.log(error))
