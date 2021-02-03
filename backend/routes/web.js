@@ -20,6 +20,7 @@ export const initRoutes = (app) => {
     });
 
     router.post('/create-ds', dsController.createNewDS);
+    router.get('/fetch-ds', dsController.fetchAllDS);
     router.post('/create-url', urlController.createNewUrl);
     router.post('/zillow-page', zillowPageController.createNewZillowPage);
     router.get('/fetch-zillow/:ds', zillowPageController.fetchAllPagesByDs);

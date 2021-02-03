@@ -13,6 +13,13 @@ class dsService {
         const newDs = await dsSchema.createNew(currentDs);
         return newDs
     }
+
+    static async getAllDS() {
+        const allDs = await dsSchema.getAllDsItem();
+        return allDs
+    }
+
+
 }
 
 
