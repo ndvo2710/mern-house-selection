@@ -7,7 +7,7 @@ import House from '../House';
 function HouseRow({ rowName, rowData }) {
     console.log(rowData);
     return (
-        <Row>
+        <Row className={rowName}>
             {
                 rowData.map((houseData, i) => {
                     const houseClassName = `house-${i}`;
