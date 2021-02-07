@@ -18,6 +18,17 @@ function App() {
       console.log(data.success);
       setHouseList(data.success);
     }
+
+    (fetchHouses)();
+
+    return () => {
+      // cleanup
+    }
+  }, [
+    // input
+  ])
+
+  useEffect(() => {
     async function fetchDS() {
       const res = await fetch(DS_API_URL);
       const data = await res.json();
@@ -26,7 +37,6 @@ function App() {
       setDsList(data.success);
     }
 
-    (fetchHouses)();
     (fetchDS)();
 
     return () => {
@@ -35,6 +45,7 @@ function App() {
   }, [
     // input
   ])
+
 
 
   return (
