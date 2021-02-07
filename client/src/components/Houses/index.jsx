@@ -1,7 +1,7 @@
 // import React from 'react';
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Col, Container, Input, Row } from "reactstrap";
-// import useDropdown from '../../hooks/useDropDown';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import HouseRow from '../HouseRow';
 
 const DS_API_URL = 'http://localhost:5000/fetch-ds';
@@ -20,7 +20,7 @@ function Houses({ houses, dsArray, setDsList }) {
     console.log('dsArray: ', dsArray);
 
     // const [dsState, dsDropdown, setDsState] = useDropdown('dsDropdown', "", dsArray);
-    const [dropDownValue, setDropDownValue] = useState("")
+    const [dropDownValue, setDropDownValue] = useLocalStorage('dsDropdown', '');
 
     async function newSectionOnClickHandle(setDropDownValue) {
         let today = new Date().toISOString().slice(0, 10);
