@@ -9,6 +9,7 @@ const DS_API_URL = 'http://localhost:5000/fetch-ds';
 function App() {
   const [houseList, setHouseList] = useState(mockData);
   const [dsList, setDsList] = useState([]);
+  const [isDsReLoad, setIsDsReLoad] = useState(false);
 
   useEffect(() => {
     async function fetchHouses() {
@@ -43,14 +44,14 @@ function App() {
       // cleanup
     }
   }, [
-    // input
+    isDsReLoad // dummy for re-rendering ds
   ])
 
 
 
   return (
     <div className="app">
-      <Houses houses={houseList} dsArray={dsList} setDsList={setDsList} />
+      <Houses houses={houseList} dsArray={dsList} setIsDsReLoad={setIsDsReLoad} />
     </div>
   );
 }

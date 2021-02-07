@@ -4,11 +4,7 @@ import { Button, Col, Container, Input, Row } from "reactstrap";
 import useLocalStorage from '../../hooks/useLocalStorage';
 import HouseRow from '../HouseRow';
 
-const DS_API_URL = 'http://localhost:5000/fetch-ds';
-
-
-
-function Houses({ houses, dsArray, setDsList }) {
+function Houses({ houses, dsArray, setIsDsReLoad }) {
 
 
     const numHousesOnRow = 3;
@@ -19,7 +15,6 @@ function Houses({ houses, dsArray, setDsList }) {
     console.log('houseArrays: ', houseArrays);
     console.log('dsArray: ', dsArray);
 
-    // const [dsState, dsDropdown, setDsState] = useDropdown('dsDropdown', "", dsArray);
     const [dropDownValue, setDropDownValue] = useLocalStorage('dsDropdown', '');
 
     async function newSectionOnClickHandle(setDropDownValue) {
@@ -41,11 +36,7 @@ function Houses({ houses, dsArray, setDsList }) {
         const response = await fetch(url, requestConfig);
         const res = await response.json();
         if ('success' in res) {
-            const res = await fetch(DS_API_URL);
-            const data = await res.json();
-            console.log('Testing');
-            console.log(data.success);
-            setDsList(data.success);
+            setIsDsReLoad(true);
             setDropDownValue(today);
         } else {
             console.log(res);
@@ -73,12 +64,6 @@ function Houses({ houses, dsArray, setDsList }) {
                                         type="text"
                                     ></Input>
                                 </Col>
-                                {/* <Col className="pl-lg-0" sm="2" xs="9">
-                                    <Button block color="primary" type="submit">
-                                        Add
-                                    </Button>
-
-                                </Col> */}
                                 <Col className="pl-lg-0" sm="2" xs="9">
                                     <label htmlFor={"dsDropdown"}>
                                         {"Section start from:   "}
