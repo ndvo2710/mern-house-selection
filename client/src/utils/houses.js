@@ -1,6 +1,7 @@
 async function createDS() {
     let today = new Date().toISOString().slice(0, 10);
-    const url = 'http://localhost:5000/create-ds'
+    // const url = 'http://localhost:5000/create-ds'
+    const url = 'https://mern-house-selection.herokuapp.com/create-ds'
 
     const requestConfig = {
         method: 'POST', // *GET, POST, PUT/PATCH, DELETE, etc.
@@ -32,7 +33,8 @@ async function createUrl(currentUrlDict) {
         }
      */
 
-    const url = 'http://localhost:5000/create-url'
+    // const url = 'http://localhost:5000/create-url'
+    const url = 'https://mern-house-selection.herokuapp.com/create-url'
     const requestConfig = {
         method: 'POST', // *GET, POST, PUT/PATCH, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
