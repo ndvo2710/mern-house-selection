@@ -1,10 +1,11 @@
 // import React from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Container, Input, Row } from "reactstrap";
-import useLocalStorage from '../../hooks/useLocalStorage';
+import houseUtil from '../../utils/houses';
 import HouseRow from '../HouseRow';
 
-function Houses({ houses, dsArray, setIsDsReLoad }) {
+
+function Houses({ houses, dsArray, sharedStates }) {
 
 
     const numHousesOnRow = 3;
@@ -12,38 +13,45 @@ function Houses({ houses, dsArray, setIsDsReLoad }) {
     for (let i = 0; i < houses.length; i += numHousesOnRow) {
         houseArrays.push(houses.slice(i, i + numHousesOnRow));
     }
-    console.log('houseArrays: ', houseArrays);
-    console.log('dsArray: ', dsArray);
+    // console.log('houseArrays: ', houseArrays);
+    // console.log('dsArray: ', dsArray);
 
-    const [dropDownValue, setDropDownValue] = useLocalStorage('dsDropdown', '');
 
-    async function newSectionOnClickHandle(setDropDownValue) {
-        let today = new Date().toISOString().slice(0, 10);
-        const url = 'http://localhost:5000/create-ds'
+    const [inputValue, setInputValue] = useState('');
 
-        const requestConfig = {
-            method: 'POST', // *GET, POST, PUT/PATCH, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *client
-            body: JSON.stringify({ currentDs: today }) // body data type must match "Content-Type" header
-        };
-        const response = await fetch(url, requestConfig);
-        const res = await response.json();
-        if ('success' in res) {
-            setIsDsReLoad(true);
-            setDropDownValue(today);
+    async function newSectionOnClickHandle(updateDropDownValue) {
+        const response = await houseUtil.createDS();
+        if ('success' in response.message) {
+            sharedStates.dsReloadCountIncrement();
+            updateDropDownValue(response.value);
         } else {
-            console.log(res);
+            console.log(response.value);
         }
     }
 
+    async function handleInputEnter(e) {
+        if (e.key === 'Enter') {
+            console.log('Enter Key is triggered');
+            console.log(e.target.value);
+            const url = encodeURI(e.target.value);
+            const urlObject = {
+                url,
+                ds: sharedStates.dropDownValue
+            }
+            console.log(urlObject);
+            const response = await houseUtil.createUrl(urlObject);
+            e.target.value = '';
+            if ('success' in response) {
+                setTimeout(() => {
+                    sharedStates.houseReloadCountIncrement();
+                    console.log('House Reload Done');
+                }, 90000);
 
+            } else {
+                console.log(response);
+            }
+        }
+    }
 
     return (
         <>
@@ -62,6 +70,9 @@ function Houses({ houses, dsArray, setIsDsReLoad }) {
                                         name="text"
                                         placeholder="Zillow Page URL"
                                         type="text"
+                                        value={inputValue}
+                                        onChange={e => setInputValue(e.target.value)}
+                                        onKeyDown={e => handleInputEnter(e)}
                                     ></Input>
                                 </Col>
                                 <Col className="pl-lg-0" sm="2" xs="9">
@@ -70,13 +81,13 @@ function Houses({ houses, dsArray, setIsDsReLoad }) {
 
                                         <select
                                             id={"dsDropdown"}
-                                            value={dropDownValue}
-                                            onChange={e => setDropDownValue(e.target.value)}
-                                            onBlur={e => setDropDownValue(e.target.value)}
+                                            value={sharedStates.dropDownValue}
+                                            onChange={e => sharedStates.updateDropDownValue(e.target.value)}
+                                            onBlur={e => sharedStates.updateDropDownValue(e.target.value)}
                                             disabled={!dsArray.length}
                                         >
-                                            {dsArray.map(dsItem =>
-                                                <option value={dsItem.ds}>{dsItem.ds}</option>)}
+                                            {dsArray.map((dsItem, i) =>
+                                                <option key={i} value={dsItem.ds}>{dsItem.ds}</option>)}
                                         </select>
                                     </label>
                                 </Col>
@@ -85,7 +96,7 @@ function Houses({ houses, dsArray, setIsDsReLoad }) {
                                         block color="primary"
                                         type="submit"
                                         className="new-section"
-                                        onClick={e => newSectionOnClickHandle(setDropDownValue)}
+                                        onClick={e => newSectionOnClickHandle(sharedStates.updateDropDownValue)}
                                     >
                                         New Section
                                     </Button>

@@ -1,21 +1,32 @@
 import { useEffect, useState } from "react";
 import Houses from './components/Houses';
+import useLocalStorage from "./hooks/useLocalStorage";
 import mockData from './mockData';
-
-const HOUSE_API_URL = 'http://localhost:5000/fetch-zillow/02-01-2021';
-const DS_API_URL = 'http://localhost:5000/fetch-ds';
-
 
 function App() {
   const [houseList, setHouseList] = useState(mockData);
   const [dsList, setDsList] = useState([]);
-  const [isDsReLoad, setIsDsReLoad] = useState(false);
+  const [dsReloadCount, setdsReloadCount] = useState(0);
+  const dsReloadCountIncrement = () => setdsReloadCount(dsReloadCount + 1);
+  const [houseReloadCount, sethouseReloadCount] = useState(0);
+  const houseReloadCountIncrement = () => sethouseReloadCount(houseReloadCount + 1);
+  const [dropDownValue, setDropDownValue] = useLocalStorage('dsDropdown', '');
+  const updateDropDownValue = (value) => setDropDownValue(value);
+
+  const sharedStates = {
+    dsReloadCountIncrement,
+    houseReloadCountIncrement,
+    dropDownValue,
+    updateDropDownValue
+  }
+
 
   useEffect(() => {
     async function fetchHouses() {
+      const HOUSE_API_URL = `http://localhost:5000/fetch-zillow/${sharedStates.dropDownValue}`;
       const res = await fetch(HOUSE_API_URL);
       const data = await res.json();
-      console.log('Testing');
+      console.log('Fetching Houses');
       console.log(data.success);
       setHouseList(data.success);
     }
@@ -26,14 +37,16 @@ function App() {
       // cleanup
     }
   }, [
-    // input
+    houseReloadCount, // dummy state for re-rendering ds
+    sharedStates.dropDownValue
   ])
 
   useEffect(() => {
     async function fetchDS() {
+      const DS_API_URL = 'http://localhost:5000/fetch-ds';
       const res = await fetch(DS_API_URL);
       const data = await res.json();
-      console.log('Testing');
+      console.log('Fetching Ds');
       console.log(data.success);
       setDsList(data.success);
     }
@@ -44,14 +57,14 @@ function App() {
       // cleanup
     }
   }, [
-    isDsReLoad // dummy for re-rendering ds
+    dsReloadCount // dummy state for re-rendering ds
   ])
 
 
 
   return (
     <div className="app">
-      <Houses houses={houseList} dsArray={dsList} setIsDsReLoad={setIsDsReLoad} />
+      <Houses houses={houseList} dsArray={dsList} sharedStates={sharedStates} />
     </div>
   );
 }
