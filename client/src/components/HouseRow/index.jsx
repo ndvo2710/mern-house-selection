@@ -5,7 +5,7 @@ import House from '../House';
 
 
 function HouseRow({ rowName, rowData }) {
-    console.log(rowData);
+    // console.log(rowData);
     return (
         <Row className={rowName}>
             {
