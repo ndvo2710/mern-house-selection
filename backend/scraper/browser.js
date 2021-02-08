@@ -10,6 +10,7 @@ class browserObject {
             logger.info("Opening the browser......");
             browser = await puppeteer.launch({
                 executablePath: '/usr/bin/chromium-browser',
+                // executablePath: './bin/chromium-browser',
                 headless: false,
                 args: ["--disable-setuid-sandbox"],
                 'ignoreHTTPSErrors': true

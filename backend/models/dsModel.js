@@ -4,7 +4,7 @@ const dsSchema = new mongoose.Schema({
     ds: { type: String, trim: true, required: true },
     isChosen: { type: Boolean, default: true },
     createdAt: { type: Number, default: Date.now },
-    updatedAt: { type: Number, default: null },
+    updatedAt: { type: Number, default: Date.now },
     deletedAt: { type: Number, default: null },
 });
 
@@ -16,7 +16,7 @@ dsSchema.statics = {
         return this.findOne({ ds: currentDs }).exec();
     },
     getAllDsItem() {
-        return this.find({}).exec();
+        return this.find({}).sort({ ds: -1 }).exec();
     }
 
 };
