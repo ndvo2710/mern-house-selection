@@ -6,7 +6,7 @@
   "license": "MIT",
   "proxy": "http://localhost:5000",
   "scripts": {
-    "install": "(cd client && yarn && yarn build) && (cd backend && yarn)",
+    "install": "(cd backend && yarn)",
     "start": "cd backend && yarn start"
   },
   "dependencies": {
