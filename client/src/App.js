@@ -23,7 +23,8 @@ function App() {
 
   useEffect(() => {
     async function fetchHouses() {
-      const HOUSE_API_URL = `http://localhost:5000/fetch-zillow/${sharedStates.dropDownValue}`;
+      // const HOUSE_API_URL = `http://localhost:5000/fetch-zillow/${sharedStates.dropDownValue}`;
+      const HOUSE_API_URL = `https://mern-house-selection.herokuapp.com/fetch-zillow/${sharedStates.dropDownValue}`;
       const res = await fetch(HOUSE_API_URL);
       const data = await res.json();
       console.log('Fetching Houses');
@@ -43,7 +44,8 @@ function App() {
 
   useEffect(() => {
     async function fetchDS() {
-      const DS_API_URL = 'http://localhost:5000/fetch-ds';
+      // const DS_API_URL = 'http://localhost:5000/fetch-ds';
+      const DS_API_URL = 'https://mern-house-selection.herokuapp.com/fetch-ds';
       const res = await fetch(DS_API_URL);
       const data = await res.json();
       console.log('Fetching Ds');
