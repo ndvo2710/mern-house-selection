@@ -1,126 +1,62 @@
-// import React from 'react';
-import React, { useState } from 'react';
-import { Button, Col, Container, Input, Row } from "reactstrap";
-import houseUtil from '../../utils/houses';
+import React, { useEffect, useState } from 'react';
+import { Container } from "reactstrap";
+import mockData from '../../mockData';
 import HouseRow from '../HouseRow';
 
 
-function Houses({ houses, dsArray, sharedStates }) {
 
 
+function Houses({ sharedStates }) {
     const numHousesOnRow = 3;
-    const houseArrays = [];
-    for (let i = 0; i < houses.length; i += numHousesOnRow) {
-        houseArrays.push(houses.slice(i, i + numHousesOnRow));
-    }
-    // console.log('houseArrays: ', houseArrays);
-    // console.log('dsArray: ', dsArray);
 
-
-    const [inputValue, setInputValue] = useState('');
-
-    async function newSectionOnClickHandle(updateDropDownValue) {
-        const response = await houseUtil.createDS();
-        if ('success' in response.message) {
-            sharedStates.dsReloadCountIncrement();
-            updateDropDownValue(response.value);
-        } else {
-            console.log(response.value);
+    const [houseList, setHouseList] = useState(() => {
+        const houseArrays = [];
+        for (let i = 0; i < mockData.length; i += numHousesOnRow) {
+            houseArrays.push(mockData.slice(i, i + numHousesOnRow));
         }
-    }
+        return houseArrays
+    });
 
-    async function handleInputEnter(e) {
-        if (e.key === 'Enter') {
-            console.log('Enter Key is triggered');
-            console.log(e.target.value);
-            const url = encodeURI(e.target.value);
-            const urlObject = {
-                url,
-                ds: sharedStates.dropDownValue
+
+
+
+    useEffect(() => {
+        async function fetchHouses() {
+            // const HOUSE_API_URL = `http://localhost:5000/fetch-zillow/${sharedStates.dropDownValue}`;
+            const HOUSE_API_URL = `https://mern-house-selection.herokuapp.com/fetch-zillow/${sharedStates.dropDownValue}`;
+            const res = await fetch(HOUSE_API_URL);
+            const data = await res.json();
+            console.log('Fetching Houses');
+            console.log(data.success);
+            const houses = data.success;
+            const houseArrays = [];
+            for (let i = 0; i < houses.length; i += numHousesOnRow) {
+                houseArrays.push(houses.slice(i, i + numHousesOnRow));
             }
-            console.log(urlObject);
-            const response = await houseUtil.createUrl(urlObject);
-            setInputValue('');
-            if ('success' in response) {
-
-                setTimeout(() => {
-                    sharedStates.houseReloadCountIncrement();
-                    console.log('House Reload Done');
-                }, 15000);
-
-
-            } else {
-                console.log(response);
-            }
+            setHouseList(houseArrays);
         }
-    }
+
+        (fetchHouses)();
+
+        return () => {
+            // cleanup
+        }
+    }, [
+        sharedStates.houseReloadCount, // dummy state for re-rendering ds
+        sharedStates.dropDownValue
+    ])
+
 
     return (
-        <>
-            <section className='blogs-2'>
-                <Container fluid>
-                    <Row className="align-items-left text-left">
-                        <Col lg="8" xs="12">
-                            <h1 className="display-3">
-                                MERN House Selection Project
-                            </h1>
-                            <Row className="row-input">
-                                <Col sm="4" xs="12">
-                                    <Input
-                                        aria-label="Your text"
-                                        id="signupSrtext"
-                                        name="text"
-                                        placeholder="Zillow Page URL"
-                                        type="text"
-                                        value={inputValue}
-                                        onChange={e => setInputValue(e.target.value)}
-                                        onKeyDown={e => handleInputEnter(e)}
-                                    ></Input>
-                                </Col>
-                                <Col className="pl-lg-0" sm="2" xs="9">
-                                    <label htmlFor={"dsDropdown"}>
-                                        {"Section start from:   "}
-
-                                        <select
-                                            id={"dsDropdown"}
-                                            value={sharedStates.dropDownValue}
-                                            onChange={e => sharedStates.updateDropDownValue(e.target.value)}
-                                            onBlur={e => sharedStates.updateDropDownValue(e.target.value)}
-                                            disabled={!dsArray.length}
-                                        >
-                                            {dsArray.map((dsItem, i) =>
-                                                <option key={i} value={dsItem.ds}>{dsItem.ds}</option>)}
-                                        </select>
-                                    </label>
-                                </Col>
-                                <Col className="pl-lg-0" sm="2" xs="9">
-                                    <Button
-                                        block color="primary"
-                                        type="submit"
-                                        className="new-section"
-                                        onClick={e => newSectionOnClickHandle(sharedStates.updateDropDownValue)}
-                                    >
-                                        New Section
-                                    </Button>
-
-                                </Col>
-                            </Row>
-                        </Col>
-
-                    </Row>
-                </Container>
-                <Container fluid>
-                    <br></br>
-                    {
-                        houseArrays.map((rowData, i) => {
-                            const rowName = `row-${i}`;
-                            return <HouseRow key={i} rowName={rowName} rowData={rowData} />
-                        })
-                    }
-                </Container>
-
-            </section>
-        </>
+        <Container fluid>
+            <br></br>
+            {
+                houseList.map((rowData, i) => {
+                    const rowName = `row-${i}`;
+                    return <HouseRow key={i} rowName={rowName} rowData={rowData} />
+                })
+            }
+        </Container>
     )
 }
 
