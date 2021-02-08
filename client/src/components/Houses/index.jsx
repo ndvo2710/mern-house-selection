@@ -40,12 +40,14 @@ function Houses({ houses, dsArray, sharedStates }) {
             }
             console.log(urlObject);
             const response = await houseUtil.createUrl(urlObject);
-            e.target.value = '';
+            setInputValue('');
             if ('success' in response) {
+
                 setTimeout(() => {
                     sharedStates.houseReloadCountIncrement();
                     console.log('House Reload Done');
-                }, 90000);
+                }, 15000);
+
 
             } else {
                 console.log(response);
