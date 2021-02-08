@@ -4,6 +4,7 @@
   "main": "index.js",
   "repository": "git@github.com:ndvo2710/mern-house-selection.git",
   "license": "MIT",
+  "proxy": "http://localhost:5000",
   "scripts": {
     "install": "(cd client && yarn) && (cd backend && yarn)",
     "start": "concurrently \"cd client && yarn start\" \"cd backend && yarn start\""
