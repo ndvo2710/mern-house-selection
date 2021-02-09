@@ -2,16 +2,11 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, Input, Row } from "reactstrap";
 import houseUtil from '../../utils/houses';
+import DsDropDown from '../DsDropDown';
 import Houses from '../Houses';
 
 
-function MainSection({ dsArray, sharedStates }) {
-
-
-
-    // console.log('houseArrays: ', houseArrays);
-    // console.log('dsArray: ', dsArray);
-
+function MainSection({ sharedStates }) {
 
     const [inputValue, setInputValue] = useState('');
 
@@ -24,6 +19,7 @@ function MainSection({ dsArray, sharedStates }) {
             console.log(response.value);
         }
     }
+
 
     async function handleInputEnter(e) {
         if (e.key === 'Enter') {
@@ -73,22 +69,7 @@ function MainSection({ dsArray, sharedStates }) {
                                         onKeyDown={e => handleInputEnter(e)}
                                     ></Input>
                                 </Col>
-                                <Col className="pl-lg-0" sm="2" xs="9">
-                                    <label htmlFor={"dsDropdown"}>
-                                        {"Section start from:   "}
-
-                                        <select
-                                            id={"dsDropdown"}
-                                            value={sharedStates.dropDownValue}
-                                            onChange={e => sharedStates.updateDropDownValue(e.target.value)}
-                                            onBlur={e => sharedStates.updateDropDownValue(e.target.value)}
-                                            disabled={!dsArray.length}
-                                        >
-                                            {dsArray.map((dsItem, i) =>
-                                                <option key={i} value={dsItem.ds}>{dsItem.ds}</option>)}
-                                        </select>
-                                    </label>
-                                </Col>
+                                <DsDropDown sharedStates={sharedStates} />
                                 <Col className="pl-lg-0" sm="2" xs="9">
                                     <Button
                                         block color="primary"
