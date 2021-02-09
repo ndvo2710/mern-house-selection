@@ -1,25 +1,15 @@
 // import React from 'react';
 import React, { useState } from 'react';
-import { Button, Col, Container, Input, Row } from "reactstrap";
+import { Col, Container, Input, Row } from "reactstrap";
 import houseUtil from '../../utils/houses';
 import DsDropDown from '../DsDropDown';
 import Houses from '../Houses';
+import NewDateButton from '../NewDateButton';
 
 
 function MainSection({ sharedStates }) {
 
     const [inputValue, setInputValue] = useState('');
-
-    async function newSectionOnClickHandle(updateDropDownValue) {
-        const response = await houseUtil.createDS();
-        if ('success' in response.message) {
-            sharedStates.dsReloadCountIncrement();
-            updateDropDownValue(response.value);
-        } else {
-            console.log(response.value);
-        }
-    }
-
 
     async function handleInputEnter(e) {
         if (e.key === 'Enter') {
@@ -70,17 +60,7 @@ function MainSection({ sharedStates }) {
                                     ></Input>
                                 </Col>
                                 <DsDropDown sharedStates={sharedStates} />
-                                <Col className="pl-lg-0" sm="2" xs="9">
-                                    <Button
-                                        block color="primary"
-                                        type="submit"
-                                        className="new-section"
-                                        onClick={e => newSectionOnClickHandle(sharedStates.updateDropDownValue)}
-                                    >
-                                        New Section
-                                    </Button>
-
-                                </Col>
+                                <NewDateButton sharedStates={sharedStates} />
                             </Row>
                         </Col>
 
