@@ -5,7 +5,7 @@ import * as logging from '../utils/loggingUtils.js';
 
 const logger = logging.getLogger('cron Job');
 
-const task = cron.schedule('*/25 * * * * *', () => {
+const task = cron.schedule('*/10 * * * * *', () => {
     logger.info('Run every minute');
     scrapAndFetchMongo();
 });
