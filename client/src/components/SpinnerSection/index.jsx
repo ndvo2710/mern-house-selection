@@ -24,7 +24,7 @@ function SpinnerSection({ sharedStates }) {
         <Col id="loading">
             <Button
                 className="ml-1 mb-1"
-                color="green"
+                color="success"
                 disabled
                 size="sm-1"
                 type="button"
