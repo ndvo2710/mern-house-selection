@@ -1,41 +1,13 @@
 // import React from 'react';
-import React, { useState } from 'react';
-import { Col, Container, Input, Row } from "reactstrap";
-import houseUtil from '../../utils/houses';
+import React from 'react';
+import { Col, Container, Row } from "reactstrap";
 import DsDropDown from '../DsDropDown';
 import Houses from '../Houses';
+import InputUrl from '../InputUrl';
 import NewDateButton from '../NewDateButton';
 
 
 function MainSection({ sharedStates }) {
-
-    const [inputValue, setInputValue] = useState('');
-
-    async function handleInputEnter(e) {
-        if (e.key === 'Enter') {
-            console.log('Enter Key is triggered');
-            console.log(e.target.value);
-            const url = encodeURI(e.target.value);
-            const urlObject = {
-                url,
-                ds: sharedStates.dropDownValue
-            }
-            console.log(urlObject);
-            const response = await houseUtil.createUrl(urlObject);
-            setInputValue('');
-            if ('success' in response) {
-
-                setTimeout(() => {
-                    sharedStates.houseReloadCountIncrement();
-                    console.log('House Reload Done');
-                }, 15000);
-
-
-            } else {
-                console.log(response);
-            }
-        }
-    }
 
     return (
         <>
@@ -47,18 +19,7 @@ function MainSection({ sharedStates }) {
                                 MERN House Selection Project
                             </h1>
                             <Row className="row-input">
-                                <Col sm="4" xs="12">
-                                    <Input
-                                        aria-label="Your text"
-                                        id="signupSrtext"
-                                        name="text"
-                                        placeholder="Zillow Page URL"
-                                        type="text"
-                                        value={inputValue}
-                                        onChange={e => setInputValue(e.target.value)}
-                                        onKeyDown={e => handleInputEnter(e)}
-                                    ></Input>
-                                </Col>
+                                <InputUrl sharedStates={sharedStates} />
                                 <DsDropDown sharedStates={sharedStates} />
                                 <NewDateButton sharedStates={sharedStates} />
                             </Row>
