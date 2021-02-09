@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col } from "reactstrap";
-
+import { Col, FormGroup, Input } from "reactstrap";
 
 
 function DsDropDown({ sharedStates }) {
@@ -21,29 +20,34 @@ function DsDropDown({ sharedStates }) {
 
         (fetchDS)();
 
+
         return () => {
             // cleanup
         }
     }, [
         sharedStates.dsReloadCount // dummy state for re-rendering ds
-    ])
+    ]);
+
 
     return (
         <Col className="pl-lg-0" sm="2" xs="9">
-            <label htmlFor={"dsDropdown"}>
-                {"Section start from:   "}
-
-                <select
-                    id={"dsDropdown"}
+            <FormGroup>
+                <Input
+                    data-trigger=""
+                    id="choices-single-default"
+                    name="choices-single-default"
+                    type="select"
                     value={sharedStates.dropDownValue}
                     onChange={e => sharedStates.updateDropDownValue(e.target.value)}
                     onBlur={e => sharedStates.updateDropDownValue(e.target.value)}
                     disabled={!dsList.length}
                 >
+                    <option placeholder="true" disabled>Houses with Date start from</option>
                     {dsList.map((dsItem, i) =>
                         <option key={i} value={dsItem.ds}>{dsItem.ds}</option>)}
-                </select>
-            </label>
+                </Input>
+
+            </FormGroup>
         </Col>
     )
 }
