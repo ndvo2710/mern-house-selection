@@ -18,7 +18,7 @@ function DsDropDown({ sharedStates }) {
 
 
     return (
-        <Col className="pl-lg-0" sm="2" xs="9">
+        <Col className="pl-lg-0" lg="1" xs="9">
             <FormGroup>
                 <Input
                     data-trigger=""

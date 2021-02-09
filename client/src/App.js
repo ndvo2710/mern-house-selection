@@ -9,6 +9,8 @@ function App() {
     const houseReloadCountIncrement = () => sethouseReloadCount(houseReloadCount + 1);
     const [dropDownValue, setDropDownValue] = useLocalStorage('dsDropdown', '');
     const updateDropDownValue = (value) => setDropDownValue(value);
+    const [SpinnerToggle, setSpinnerToggle] = useState(false);
+    const updateSpinnerToogle = (value) => setSpinnerToggle(value);
 
     const sharedStates = {
         dsReloadCount,
@@ -16,7 +18,9 @@ function App() {
         houseReloadCount,
         houseReloadCountIncrement,
         dropDownValue,
-        updateDropDownValue
+        updateDropDownValue,
+        SpinnerToggle,
+        updateSpinnerToogle
     }
 
     return (

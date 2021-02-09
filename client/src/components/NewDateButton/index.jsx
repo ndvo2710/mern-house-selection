@@ -14,7 +14,7 @@ function NewDateButton({ sharedStates }) {
     }
 
     return (
-        <Col className="pl-lg-0" sm="2" xs="9">
+        <Col className="pl-lg-0" lg="2" xs="9">
             <Button
                 block color="primary"
                 type="submit"

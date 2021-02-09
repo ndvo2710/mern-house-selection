@@ -19,10 +19,12 @@ function InputUrl({ sharedStates }) {
             const response = await houseUtil.createUrl(urlObject);
             setInputValue('');
             if ('success' in response) {
+                sharedStates.updateSpinnerToogle(true);
 
                 setTimeout(() => {
                     sharedStates.houseReloadCountIncrement();
                     console.log('House Reload Done');
+                    sharedStates.updateSpinnerToogle(false);
                 }, 18000);
 
 
@@ -33,7 +35,7 @@ function InputUrl({ sharedStates }) {
     }
 
     return (
-        <Col sm="4" xs="12">
+        <Col lg="4" xs="12">
             <Input
                 aria-label="Your text"
                 id="signupSrtext"

@@ -5,6 +5,7 @@ import DsDropDown from '../DsDropDown';
 import Houses from '../Houses';
 import InputUrl from '../InputUrl';
 import NewDateButton from '../NewDateButton';
+import SpinnerSection from '../SpinnerSection';
 
 
 function MainSection({ sharedStates }) {
@@ -14,7 +15,7 @@ function MainSection({ sharedStates }) {
             <section className='blogs-2'>
                 <Container fluid>
                     <Row className="align-items-left text-left">
-                        <Col lg="8" xs="12">
+                        <Col lg="12" xs="12">
                             <h1 className="display-3">
                                 MERN House Selection Project
                             </h1>
@@ -22,8 +23,11 @@ function MainSection({ sharedStates }) {
                                 <InputUrl sharedStates={sharedStates} />
                                 <DsDropDown sharedStates={sharedStates} />
                                 <NewDateButton sharedStates={sharedStates} />
+                                <SpinnerSection sharedStates={sharedStates} />
                             </Row>
                         </Col>
+
+
 
                     </Row>
                 </Container>

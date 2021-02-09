@@ -51,7 +51,7 @@ zillowSchema.statics = {
         return this.create(itemDict);
     },
     checkExists(itemDict) {
-        return this.findOne({ address: itemDict.address }).exec();
+        return this.findOne({ address: itemDict.address, ds: itemDict.ds }).exec();
     },
     getItemsByDs(ds) {
         return this.find({ ds: ds }).exec();
