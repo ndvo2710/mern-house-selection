@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from "reactstrap";
 import mockData from '../../mockData';
+import houseUtil from '../../utils/houses';
 import HouseRow from '../HouseRow';
-
-
-
 
 function Houses({ sharedStates }) {
     const numHousesOnRow = 3;
@@ -16,27 +14,15 @@ function Houses({ sharedStates }) {
         }
         return houseArrays
     });
-
-
+    const updateHouseList = (value) => setHouseList(value);
 
 
     useEffect(() => {
-        async function fetchHouses() {
-            // const HOUSE_API_URL = `http://localhost:5000/fetch-zillow/${sharedStates.dropDownValue}`;
-            const HOUSE_API_URL = `https://mern-house-selection.herokuapp.com/fetch-zillow/${sharedStates.dropDownValue}`;
-            const res = await fetch(HOUSE_API_URL);
-            const data = await res.json();
-            console.log('Fetching Houses');
-            console.log(data.success);
-            const houses = data.success;
-            const houseArrays = [];
-            for (let i = 0; i < houses.length; i += numHousesOnRow) {
-                houseArrays.push(houses.slice(i, i + numHousesOnRow));
-            }
-            setHouseList(houseArrays);
-        }
-
-        (fetchHouses)();
+        houseUtil.fetchHouses(
+            sharedStates.dropDownValue,
+            numHousesOnRow,
+            updateHouseList
+        );
 
         return () => {
             // cleanup

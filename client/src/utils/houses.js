@@ -53,9 +53,36 @@ async function createUrl(currentUrlDict) {
     return res
 }
 
+async function fetchHouses(dsValue, numHousesOnRow, updateHouseListCallback) {
+    // const HOUSE_API_URL = `http://localhost:5000/fetch-zillow/${sharedStates.dropDownValue}`;
+    const HOUSE_API_URL = `https://mern-house-selection.herokuapp.com/fetch-zillow/${dsValue}`;
+    const res = await fetch(HOUSE_API_URL);
+    const data = await res.json();
+    console.log('Fetching Houses');
+    console.log(data.success);
+    const houses = data.success;
+    const houseArrays = [];
+    for (let i = 0; i < houses.length; i += numHousesOnRow) {
+        houseArrays.push(houses.slice(i, i + numHousesOnRow));
+    }
+    updateHouseListCallback(houseArrays);
+}
+
+async function fetchDS(updateDsListCallback) {
+    // const DS_API_URL = 'http://localhost:5000/fetch-ds';
+    const DS_API_URL = 'https://mern-house-selection.herokuapp.com/fetch-ds';
+    const res = await fetch(DS_API_URL);
+    const data = await res.json();
+    console.log('Fetching Ds');
+    console.log(data.success);
+    updateDsListCallback(data.success);
+}
+
 const houseUtil = {
     createDS,
-    createUrl
+    createUrl,
+    fetchHouses,
+    fetchDS
 };
 
 export default houseUtil;

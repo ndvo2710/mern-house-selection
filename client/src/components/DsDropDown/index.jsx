@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Col, FormGroup, Input } from "reactstrap";
-
+import houseUtil from '../../utils/houses';
 
 function DsDropDown({ sharedStates }) {
     const [dsList, setDsList] = useState([]);
-
-
+    const updateDsList = (value) => setDsList(value);
 
     useEffect(() => {
-        async function fetchDS() {
-            // const DS_API_URL = 'http://localhost:5000/fetch-ds';
-            const DS_API_URL = 'https://mern-house-selection.herokuapp.com/fetch-ds';
-            const res = await fetch(DS_API_URL);
-            const data = await res.json();
-            console.log('Fetching Ds');
-            console.log(data.success);
-            setDsList(data.success);
-        }
-
-        (fetchDS)();
-
+        houseUtil.fetchDS(updateDsList);
 
         return () => {
             // cleanup
