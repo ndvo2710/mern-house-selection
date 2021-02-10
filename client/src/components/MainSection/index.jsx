@@ -7,8 +7,8 @@ import InputUrl from '../InputUrl';
 import NewDateButton from '../NewDateButton';
 import SpinnerSection from '../SpinnerSection';
 
-
 function MainSection({ sharedStates }) {
+
 
     return (
         <>
@@ -19,18 +19,16 @@ function MainSection({ sharedStates }) {
                             <h1 className="display-3">
                                 MERN House Selection Project
                             </h1>
+                            <NewDateButton sharedStates={sharedStates} />
                             <Row className="row-input">
                                 <InputUrl sharedStates={sharedStates} />
                                 <DsDropDown sharedStates={sharedStates} />
-                                <NewDateButton sharedStates={sharedStates} />
                                 <SpinnerSection sharedStates={sharedStates} />
                             </Row>
                         </Col>
-
-
-
                     </Row>
                 </Container>
+
                 <Houses sharedStates={sharedStates} />
 
             </section>

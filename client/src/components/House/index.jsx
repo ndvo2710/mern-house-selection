@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardBody, CardTitle, Col } from "reactstrap";
 
 
 function House({ houseClassName, houseData }) {
+    const [backgroundColor, setBackgroundColor] = useState('');
+
+
     return (
-        <Col className={houseClassName}>
+        <Col
+            className={houseClassName}
+            style={{
+                backgroundColor: backgroundColor,
+            }}
+        >
             <Card
                 className="card-blog card-background"
                 data-animation="zooming"
@@ -16,12 +24,15 @@ function House({ houseClassName, houseData }) {
                             "url(" + houseData.imageLink + ")",
                     }}
                 ></div>
-                <a href={houseData.url} onClick={(e) => {
-                    e.preventDefault(); // USE this to prevent go to href site
-                    var win = window.open(houseData.url, '_blank');
-                    win.focus();
+                <a
+                    href={houseData.url}
+                    onClick={(e) => {
+                        e.preventDefault(); // USE this to prevent go to href site
+                        // var win = window.open(houseData.url, '_blank');
+                        // win.focus();
+                        backgroundColor === '' ? setBackgroundColor('green') : setBackgroundColor('');
 
-                }}>
+                    }}>
                     <CardBody>
                         <div className="content-bottom">
                             <h3 className="card-category text-white opacity-8">
@@ -34,7 +45,7 @@ function House({ houseClassName, houseData }) {
                     </CardBody>
                 </a>
             </Card>
-        </Col>
+        </Col >
     )
 }
 
